@@ -30,28 +30,38 @@ namespace WebView2CSharpBrowser
             this.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
             this.CoreWebView2.SourceChanged += CoreWebView2_SourceChanged;
             this.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequestedAsync;
+            this.CoreWebView2.DocumentTitleChanged += CoreWebView2_DocumentTitleChanged;
             await this.CoreWebView2.CallDevToolsProtocolMethodAsync("Security.enable", "{}");
 
             this.CoreWebView2.GetDevToolsProtocolEventReceiver("Security.securityStateChanged").DevToolsProtocolEventReceived += Tab_DevToolsProtocolEventReceived;
 
         }
 
+        
+
         private async void InitAsync(CoreWebView2Environment env, bool shouldBeActive)
         {
-            await EnsureCoreWebView2Async(env);
-            CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+            await this.EnsureCoreWebView2Async(env);
+            this.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
 
-            CoreWebView2.Navigate("https://www.bing.com");
+            this.CoreWebView2.Navigate("https://www.bing.com");
 
-            CoreWebView2.HistoryChanged += CoreWebView2_HistoryChanged;
-            CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
-            CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
-            CoreWebView2.SourceChanged += CoreWebView2_SourceChanged;
-            CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequestedAsync;
-            await CoreWebView2.CallDevToolsProtocolMethodAsync("Security.enable", "{}");
+            this.CoreWebView2.HistoryChanged += CoreWebView2_HistoryChanged;
+            this.CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
+            this.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+            this.CoreWebView2.SourceChanged += CoreWebView2_SourceChanged;
+            this.CoreWebView2.DocumentTitleChanged += CoreWebView2_DocumentTitleChanged;
+            this.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequestedAsync;
+            await this.CoreWebView2.CallDevToolsProtocolMethodAsync("Security.enable", "{}");
 
-            CoreWebView2.GetDevToolsProtocolEventReceiver("Security.securityStateChanged").DevToolsProtocolEventReceived += Tab_DevToolsProtocolEventReceived;
+            this.CoreWebView2.GetDevToolsProtocolEventReceiver("Security.securityStateChanged").DevToolsProtocolEventReceived += Tab_DevToolsProtocolEventReceived;
 
+        }
+
+        private void CoreWebView2_DocumentTitleChanged(object sender, object e)
+        {
+            if (!string.Equals(this.CoreWebView2.Source, this.CoreWebView2.DocumentTitle))
+            MainBrowser.HandleTabDocumentTitleChange(Tabid, this.CoreWebView2.Source, this.CoreWebView2.DocumentTitle);
         }
 
         private async void CoreWebView2_NewWindowRequestedAsync(object sender, CoreWebView2NewWindowRequestedEventArgs e)

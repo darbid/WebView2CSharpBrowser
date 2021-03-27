@@ -281,13 +281,21 @@ namespace WebView2CSharpBrowser
 			PostJsonToWebView(mess, UIControlsBrowser.CoreWebView2);
 		}
 
-		
+		public void HandleTabDocumentTitleChange(int id, string url, string title)
+        {
+			UIMessages UTMess = new(UIMessages.MessageOptions.MG_UPDATE_TAB);
+			UTMess.Args.TabId = id;
+			UTMess.Args.Title = title;
+			UTMess.Args.Uri = url;
+			PostJsonToWebView(UTMess, UIControlsBrowser.CoreWebView2);
+		}
 
 		public void HandleTabHistory(int id, CoreWebView2 webview)
 		{
 			UIMessages mess = new(UIMessages.MessageOptions.MG_UPDATE_URI);
 			mess.Args.TabId = id;
 			mess.Args.Uri = webview.Source;
+			mess.Args.Title = webview.DocumentTitle;
 			mess.Args.CanGoBack = webview.CanGoBack;
 			mess.Args.CanGoForward = webview.CanGoForward;
 

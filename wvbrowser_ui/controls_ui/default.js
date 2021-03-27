@@ -91,7 +91,7 @@ const messageHandler = event => {
                     refreshTabs();
                     return;
                 }
-
+                
                 // Update tab label
                 // Use given title or fall back to a generic tab title
                 tab.title = args.title || 'Tab';
