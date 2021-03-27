@@ -11,6 +11,9 @@ const messageHandler = event => {
     var message = event.data.message;
     var args = event.data.args;
     switch (message) {
+        case commands.MG_NEW_WINDOW_REQUESTED:
+            createNewWindowRequestedTab(true);
+            break;
         case commands.MG_UPDATE_URI:
            
             if (isValidTabId(args.tabId)) {

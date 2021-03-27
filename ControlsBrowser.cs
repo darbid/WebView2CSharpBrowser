@@ -41,9 +41,9 @@ namespace WebView2CSharpBrowser
             }
             
             await EnsureCoreWebView2Async(ControlsCoreWebView2Environment);
-            CoreWebView2.Settings.AreDevToolsEnabled = true;
+            CoreWebView2.Settings.AreDevToolsEnabled = false;
             CoreWebView2.Settings.IsZoomControlEnabled = false;
-            CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
+            CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             DefaultBackgroundColor = System.Drawing.Color.Transparent;
 
             ZoomFactorChanged += ControlsBrowser_ZoomFactorChanged;

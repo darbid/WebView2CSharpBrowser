@@ -6,4 +6,6 @@ This is my attempt to make a C# example of Microsoft's [Github WebViewBrowserApp
 
 I have one known issue which I think has more to do with WPF than WebView2.  Would love for someone to work out how to fix it.
 
+I have also implemented the NewWindowRequested event which opens a new tab instead of opening a complete new window.
+
 

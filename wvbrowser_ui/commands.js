@@ -7,6 +7,7 @@ const commands = {
     MG_NAV_COMPLETED: 6,
     MG_RELOAD: 7,
     MG_CANCEL: 8,
+    MG_NEW_WINDOW_REQUESTED: 9,
     MG_CREATE_TAB: 10,
     MG_UPDATE_TAB: 11,
     MG_SWITCH_TAB: 12,

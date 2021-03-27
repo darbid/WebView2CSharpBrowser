@@ -11,6 +11,39 @@ function isValidTabId(tabId) {
     return tabId != INVALID_TAB_ID && tabs.has(tabId);
 }
 
+function createNewWindowRequestedTab(shouldBeActive) {
+    const tabId = getNewTabId();
+
+    var message = {
+        message: commands.MG_SWITCH_TAB,
+        args: {
+            tabId: parseInt(tabId),
+            active: shouldBeActive || false
+        }
+    };
+
+    window.chrome.webview.postMessage(message);
+
+    tabs.set(parseInt(tabId), {
+        title: 'New Tab',
+        uri: '',
+        uriToShow: '',
+        favicon: 'img/favicon.png',
+        isFavorite: false,
+        isLoading: false,
+        canGoBack: false,
+        canGoForward: false,
+        securityState: 'unknown',
+        historyItemId: INVALID_HISTORY_ID
+    });
+
+    loadTabUI(tabId);
+
+    if (shouldBeActive) {
+        switchToTab(tabId, false);
+    }
+}
+
 function createNewTab(shouldBeActive) {
     const tabId = getNewTabId();
 

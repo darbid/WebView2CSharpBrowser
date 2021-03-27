@@ -257,6 +257,21 @@ namespace WebView2CSharpBrowser
 			}
 		}
 
+		public void HandleNewTabRequestAsync(Tab tab)
+		{
+			tab.Tabid = TabCollection.Count + 1;
+			TabCollection[GetActiveTab()].ShouldBeActive = false;
+			TabCollection.Add(tab);
+			//Handling a newly requested window is not in the C++ version. 
+			//First Create the new tab and add it to the collection of tabs
+			//Send a message to the UIControls which is a new message of MG_NEW_WINDOW_REQUESTED
+			//In the Javascript it creates a new tab and then sends a switch message so that the TabCollection switches to this newly created tab item.
+			UIMessages mess = new(UIMessages.MessageOptions.MG_NEW_WINDOW_REQUESTED);
+			mess.Args.TabId = tab.Tabid;
+			PostJsonToWebView(mess, UIControlsBrowser.CoreWebView2);
+			
+		}
+		
 		public void HandleTabURIUpdate(int id, CoreWebView2 webview)
 		{
 			UIMessages mess = new(UIMessages.MessageOptions.MG_UPDATE_URI);
